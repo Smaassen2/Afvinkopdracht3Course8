@@ -1,5 +1,3 @@
-from Bio import Entrez, Medline
-
 def obtain_combinations():
     compoundlist = []
     with open('compounds.txt', 'r') as file:
@@ -7,6 +5,7 @@ def obtain_combinations():
             line = line.strip()
             if line:
                 compoundlist.append(line)
+    #print(len(compoundlist))
     file.close()
 
     molecular_effectslist = []
@@ -15,6 +14,7 @@ def obtain_combinations():
             line2 = line2.strip()
             if line2:
                 molecular_effectslist.append(line2)
+    #print(len(molecular_effectslist))
     file2.close()
 
     geneslist = []
@@ -23,24 +23,25 @@ def obtain_combinations():
             line3 = line3.strip()
             if line3:
                 geneslist.append(line3)
+    #print(len(geneslist))
     file3.close()
 
+    combinations = []
+    #counter = 0
     for compound in compoundlist:
         for molecular_effect in molecular_effectslist:
             for gene in geneslist:
-                inputterm = compound + "+" + \
-                            molecular_effect + "+" + gene
-                print(inputterm)
-                Entrez.email = "A.N.Other@example.com"
-                handle = Entrez.egquery(term=inputterm)
-                record = Entrez.read(handle)
-                for row in record["eGQueryResult"]:
-                    if row["DbName"] == "pubmed":
-                        amount_of_hits = int(row["Count"])
-                        if amount_of_hits > 0:
-                            print(str(amount_of_hits) + " articles found")
-                            print(inputterm)
-                            exit()
+                #counter += 1
+                combinations.append(compound + " " + molecular_effect
+                                    + " " + gene)
+    #print(len(combinations))
+    #print(counter)
+    return combinations
+
+
+
+
 
 if __name__ == '__main__':
-    obtain_combinations()
+    combinations = obtain_combinations()
+    print(len(combinations))
