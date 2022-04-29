@@ -1,3 +1,5 @@
+from Bio import Entrez, Medline
+
 def obtain_combinations():
     compoundlist = []
     with open('compounds.txt', 'r') as file:
@@ -5,7 +7,6 @@ def obtain_combinations():
             line = line.strip()
             if line:
                 compoundlist.append(line)
-    #print(len(compoundlist))
     file.close()
 
     molecular_effectslist = []
@@ -14,7 +15,6 @@ def obtain_combinations():
             line2 = line2.strip()
             if line2:
                 molecular_effectslist.append(line2)
-    #print(len(molecular_effectslist))
     file2.close()
 
     geneslist = []
@@ -23,25 +23,18 @@ def obtain_combinations():
             line3 = line3.strip()
             if line3:
                 geneslist.append(line3)
-    #print(len(geneslist))
     file3.close()
 
-    combinations = []
-    #counter = 0
+    highest_occurence = 0
+    highest_occurence_combination = ""
+    possible_combinations = []
     for compound in compoundlist:
         for molecular_effect in molecular_effectslist:
             for gene in geneslist:
-                #counter += 1
-                combinations.append(compound + " " + molecular_effect
-                                    + " " + gene)
-    #print(len(combinations))
-    #print(counter)
-    return combinations
-
-
-
-
+                inputterms = compound + "+" + \
+                            molecular_effect + "+" + gene
+                possible_combinations.append(inputterms)
+    print(len(possible_combinations))
 
 if __name__ == '__main__':
-    combinations = obtain_combinations()
-    print(len(combinations))
+    obtain_combinations()
