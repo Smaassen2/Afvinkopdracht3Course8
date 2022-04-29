@@ -35,8 +35,8 @@ def search(compoundlist, molecular_effectslist, geneslist):
     for compound in compoundlist:
         for molecular_effect in molecular_effectslist:
             for gene in geneslist:
-                inputterms = compound + " + " + \
-                            molecular_effect + " + " + gene
+                inputterms = compound + "+" + \
+                            molecular_effect + "+" + gene
                 #print(inputterms)
                 Entrez.email = "A.N.Other@example.com"
                 handle = Entrez.egquery(term=inputterms)
