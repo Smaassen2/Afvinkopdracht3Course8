@@ -25,14 +25,18 @@ def obtain_combinations():
                 geneslist.append(line3)
     file3.close()
 
+    return compoundlist, molecular_effectslist, geneslist
+
+def search(compoundlist, molecular_effectslist, geneslist):
+
     highest_occurence = 0
     highest_occurence_combination = ""
 
     for compound in compoundlist:
         for molecular_effect in molecular_effectslist:
             for gene in geneslist:
-                inputterms = compound + "+" + \
-                            molecular_effect + "+" + gene
+                inputterms = compound + "and" + \
+                            molecular_effect + "and" + gene
                 #print(inputterms)
                 Entrez.email = "A.N.Other@example.com"
                 handle = Entrez.egquery(term=inputterms)
@@ -54,4 +58,5 @@ def obtain_combinations():
     print(highest_occurence)
 
 if __name__ == '__main__':
-    obtain_combinations()
+    compoundlist, molecular_effectslist, geneslist = obtain_combinations()
+    search(compoundlist, molecular_effectslist, geneslist)
